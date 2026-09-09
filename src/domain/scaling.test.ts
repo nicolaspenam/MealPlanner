@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { formatQuantity, normalizeQuantity, scaleIngredients } from "./scaling";
+import { formatAmount, formatQuantity, normalizeQuantity, scaleIngredients } from "./scaling";
 import type { Ingredient } from "./types";
 
 const chicken: Ingredient = {
@@ -29,5 +29,11 @@ describe("scaling", () => {
   it("formats quantities without trailing zeros", () => {
     expect(formatQuantity(2)).toBe("2");
     expect(formatQuantity(1.5)).toBe("1.5");
+  });
+
+  it("pluralizes countable units on the shopping list", () => {
+    expect(formatAmount(4, "can")).toBe("4 cans");
+    expect(formatAmount(1, "can")).toBe("1 can");
+    expect(formatAmount(2, "g")).toBe("2 g");
   });
 });

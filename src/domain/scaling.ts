@@ -67,6 +67,26 @@ export function formatQuantity(quantity: number): string {
   return String(rounded);
 }
 
+const COUNT_PLURALS: Partial<Record<IngredientUnit, string>> = {
+  piece: "pieces",
+  clove: "cloves",
+  bunch: "bunches",
+  slice: "slices",
+  can: "cans",
+  pack: "packs",
+};
+
+export function formatUnit(quantity: number, unit: IngredientUnit): string {
+  if (quantity === 1) {
+    return unit;
+  }
+  return COUNT_PLURALS[unit] ?? unit;
+}
+
+export function formatAmount(quantity: number, unit: IngredientUnit): string {
+  return `${formatQuantity(quantity)} ${formatUnit(quantity, unit)}`;
+}
+
 export function shoppingItemKey(
   name: string,
   unit: IngredientUnit,

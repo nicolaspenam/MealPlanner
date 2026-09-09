@@ -6,7 +6,9 @@ import { App } from "./App";
 import { StoreProvider } from "./state/storeContext";
 import "./styles.css";
 
-registerSW({ immediate: true });
+if (import.meta.env.PROD) {
+  registerSW({ immediate: true });
+}
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

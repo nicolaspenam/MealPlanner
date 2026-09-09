@@ -1,5 +1,5 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { formatQuantity } from "../domain/scaling";
+import { formatAmount } from "../domain/scaling";
 import { usePlannerStore, useResolvedRecipes } from "../state/storeContext";
 
 export function RecipeDetailPage() {
@@ -36,7 +36,7 @@ export function RecipeDetailPage() {
         <ul>
           {recipe.ingredients.map((ingredient) => (
             <li key={ingredient.id}>
-              {formatQuantity(ingredient.quantity)} {ingredient.unit} {ingredient.name}
+              {formatAmount(ingredient.quantity, ingredient.unit)} {ingredient.name}
             </li>
           ))}
         </ul>

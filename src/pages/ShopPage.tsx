@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { AISLE_LABELS } from "../domain/aisles";
 import { addDays, formatWeekRange, startOfWeek, todayISO } from "../domain/dates";
-import { formatQuantity } from "../domain/scaling";
+import { formatAmount } from "../domain/scaling";
 import { buildShoppingList } from "../domain/shoppingList";
 import { useAppData, usePlannerStore, useResolvedRecipes } from "../state/storeContext";
 
@@ -74,7 +74,7 @@ export function ShopPage() {
                   />
                   <div>
                     <div className="meal-title">
-                      {formatQuantity(item.quantity)} {item.unit} {item.name}
+                      {formatAmount(item.quantity, item.unit)} {item.name}
                     </div>
                     <div className="muted">{recipesLabel}</div>
                   </div>
