@@ -1,6 +1,8 @@
 # Meal Planner
 
-A installable PWA for planning the week’s meals and turning them into a grocery list. Data stays on the device, with JSON export/import for moving to a new phone.
+An installable PWA for planning the week’s meals and turning them into a grocery list. Data stays on the device, with JSON export/import for moving to a new phone.
+
+**Live app:** [https://nicolaspenam.github.io/MealPlanner/](https://nicolaspenam.github.io/MealPlanner/)
 
 ## What it does now
 
@@ -30,4 +32,14 @@ npm test
 npm run dev
 ```
 
-Build a production PWA with `npm run build` and `npm run preview`.
+The Vite dev server is at [http://127.0.0.1:5173/MealPlanner/](http://127.0.0.1:5173/MealPlanner/) because the production site lives under that GitHub Pages path.
+
+Build a production PWA with `npm run build`. Preview the built files with `npm run preview`, then open [http://127.0.0.1:4173/MealPlanner/](http://127.0.0.1:4173/MealPlanner/).
+
+## GitHub Pages
+
+The app is a Vite build. GitHub Pages cannot run TypeScript from `src/`, so publishing the `main` branch root produces a blank page: the served `index.html` asks the browser for `/src/main.tsx`, which is not a compiled bundle.
+
+This repo deploys the `dist/` output with a GitHub Actions workflow (`.github/workflows/deploy.yml`) on every push to `main`.
+
+**One-time setting:** in the repo, open **Settings → Pages**. Under **Build and deployment → Source**, choose **GitHub Actions** (not “Deploy from a branch”). After that, each merge to `main` publishes [https://nicolaspenam.github.io/MealPlanner/](https://nicolaspenam.github.io/MealPlanner/).

@@ -4,11 +4,12 @@ import { VitePWA } from "vite-plugin-pwa";
 import path from "node:path";
 
 export default defineConfig({
+  base: "/MealPlanner/",
   plugins: [
     react(),
     VitePWA({
       registerType: "autoUpdate",
-      includeAssets: ["favicon.svg", "apple-touch-icon.png"],
+      includeAssets: ["favicon.svg", "apple-touch-icon.png", ".nojekyll"],
       manifest: {
         name: "Meal Planner",
         short_name: "Meals",
@@ -16,8 +17,8 @@ export default defineConfig({
         theme_color: "#2f6f4e",
         background_color: "#f6f1e8",
         display: "standalone",
-        start_url: "/",
-        scope: "/",
+        start_url: "./",
+        scope: "./",
         icons: [
           {
             src: "pwa-192.png",
