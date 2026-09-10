@@ -131,6 +131,7 @@ export function RecipeEditPage({ mode }: { mode: "new" | "edit" }) {
                 onChange={(event) => updateIngredient(ingredient.id, { name: event.target.value })}
               />
               <input
+                className="ingredient-qty"
                 type="number"
                 min={0}
                 step="any"
@@ -140,6 +141,7 @@ export function RecipeEditPage({ mode }: { mode: "new" | "edit" }) {
                 }
               />
               <select
+                className="ingredient-unit"
                 value={ingredient.unit}
                 onChange={(event) =>
                   updateIngredient(ingredient.id, {
@@ -154,6 +156,7 @@ export function RecipeEditPage({ mode }: { mode: "new" | "edit" }) {
                 ))}
               </select>
               <select
+                className="ingredient-aisle"
                 value={ingredient.aisle}
                 onChange={(event) =>
                   updateIngredient(ingredient.id, {
