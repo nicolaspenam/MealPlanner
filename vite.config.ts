@@ -43,6 +43,20 @@ export default defineConfig({
       },
     }),
   ],
+  build: {
+    rollupOptions: {
+      output: {
+        entryFileNames: "assets/app.js",
+        chunkFileNames: "assets/[name].js",
+        assetFileNames: (info) => {
+          if (info.name?.endsWith(".css")) {
+            return "assets/app.css";
+          }
+          return "assets/[name][extname]";
+        },
+      },
+    },
+  },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "src"),

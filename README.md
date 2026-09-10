@@ -38,8 +38,14 @@ Build a production PWA with `npm run build`. Preview the built files with `npm r
 
 ## GitHub Pages
 
-The app is a Vite build. GitHub Pages cannot run TypeScript from `src/`, so publishing the `main` branch root produces a blank page: the served `index.html` asks the browser for `/src/main.tsx`, which is not a compiled bundle.
+Live app: [https://nicolaspenam.github.io/MealPlanner/](https://nicolaspenam.github.io/MealPlanner/)
 
-This repo deploys the `dist/` output with a GitHub Actions workflow (`.github/workflows/deploy.yml`) on every push to `main`.
+GitHub Pages is publishing this repository’s `main` branch as static files. Vite cannot compile TypeScript there, so the repo also contains a production bundle at the branch root (`assets/app.js`) that `index.html` loads on `github.io`.
 
-**One-time setting:** in the repo, open **Settings → Pages**. Under **Build and deployment → Source**, choose **GitHub Actions** (not “Deploy from a branch”). After that, each merge to `main` publishes [https://nicolaspenam.github.io/MealPlanner/](https://nicolaspenam.github.io/MealPlanner/).
+Refresh that bundle after UI changes:
+
+```bash
+npm run pages:bundle
+```
+
+`.github/workflows/deploy.yml` rebuilds and commits it on every push to `main`. If Pages is later switched to **GitHub Actions**, the same workflow also uploads `dist/`.
