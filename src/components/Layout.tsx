@@ -13,7 +13,7 @@ export function Layout() {
       <main>
         <Outlet />
       </main>
-      <nav className="bottom-nav">
+      <nav className="bottom-nav" aria-label="Main">
         {links.map((link) => (
           <NavLink
             key={link.to}

@@ -76,8 +76,9 @@ export function WeekPage() {
           Surprise remaining meals
         </button>
         <p className="muted">
-          Fills empty slots with random healthy recipes. Each cook is scaled to one portion so
-          nothing is left over. Treats stay out of the mix.
+          {emptyCount === 0
+            ? "Every slot this week already has a meal."
+            : "Fills empty slots with random healthy recipes. Each cook is scaled to one portion so nothing is left over. Treats stay out of the mix."}
         </p>
       </div>
       {fillMessage ? <p className="status-note">{fillMessage}</p> : null}

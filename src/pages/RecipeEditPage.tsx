@@ -125,6 +125,7 @@ export function RecipeEditPage({ mode }: { mode: "new" | "edit" }) {
           {recipe.ingredients.map((ingredient) => (
             <div className="ingredient-row" key={ingredient.id}>
               <input
+                className="ingredient-name"
                 placeholder="Name"
                 value={ingredient.name}
                 onChange={(event) => updateIngredient(ingredient.id, { name: event.target.value })}
@@ -167,7 +168,8 @@ export function RecipeEditPage({ mode }: { mode: "new" | "edit" }) {
                 ))}
               </select>
               <button
-                className="btn ghost"
+                className="btn ghost ingredient-remove"
+                aria-label="Remove ingredient"
                 onClick={() =>
                   setRecipe((current) =>
                     current

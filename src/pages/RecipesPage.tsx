@@ -45,7 +45,7 @@ export function RecipesPage() {
         value={query}
         onChange={(event) => setQuery(event.target.value)}
       />
-      <div className="tags" style={{ marginTop: "0.8rem" }}>
+      <div className="tags chip-row">
         {tags.map((item) => (
           <button
             key={item}
