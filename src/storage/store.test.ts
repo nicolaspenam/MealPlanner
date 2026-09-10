@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { PlannerStore } from "./store";
 import { memoryStorage } from "./storage";
 import { buildShoppingList } from "../domain/shoppingList";
-import { startOfWeek } from "../domain/dates";
+import { startOfWeek, weekDates } from "../domain/dates";
 
 function store() {
   return new PlannerStore(memoryStorage());
@@ -95,5 +95,36 @@ describe("PlannerStore", () => {
     expect(planner.recipes().find((recipe) => recipe.id === "overnight-oats-berries")?.name).toBe(
       "Protein overnight oats",
     );
+  });
+
+  it("lets users rewrite builtin instructions and keeps those steps", () => {
+    const planner = store();
+    const oats = planner.recipes().find((recipe) => recipe.id === "overnight-oats-berries");
+    expect(oats?.instructions?.length).toBeGreaterThan(0);
+    planner.upsertRecipe({
+      ...oats!,
+      instructions: ["Soak oats in kefir.", "Add extra berries in the morning."],
+    });
+    expect(planner.recipes().find((recipe) => recipe.id === "overnight-oats-berries")?.instructions).toEqual([
+      "Soak oats in kefir.",
+      "Add extra berries in the morning.",
+    ]);
+  });
+
+  it("fills remaining meals for a week with no leftovers and a shopping list", () => {
+    const planner = store();
+    planner.planEatingOut({ date: "2026-09-07", slotId: "dinner", name: "Tacos" });
+    const filled = planner.fillRemainingWeek(weekDates("2026-09-07"));
+    expect(filled).toBe(20);
+    expect(planner.getSnapshot().mealEntries).toHaveLength(21);
+    expect(planner.leftoverBatches()).toEqual([]);
+    const list = buildShoppingList("2026-09-07", planner.getSnapshot(), planner.recipes());
+    expect(list.length).toBeGreaterThan(0);
+    expect(
+      planner
+        .getSnapshot()
+        .mealEntries.filter((entry) => entry.kind === "recipe")
+        .every((entry) => entry.portions === 1),
+    ).toBe(true);
   });
 });

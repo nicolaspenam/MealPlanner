@@ -22,12 +22,14 @@ describe("resolveRecipes", () => {
       ...builtin,
       name: "Overnight oats with protein",
       servings: 4,
+      instructions: ["Soak in kefir instead of milk."],
     };
     const resolved = resolveRecipes([builtin], [overlay]);
     expect(resolved).toHaveLength(1);
     expect(resolved[0]?.id).toBe("oats");
     expect(resolved[0]?.name).toBe("Overnight oats with protein");
     expect(resolved[0]?.servings).toBe(4);
+    expect(resolved[0]?.instructions).toEqual(["Soak in kefir instead of milk."]);
   });
 
   it("includes custom recipes and hides archived ones by default", () => {

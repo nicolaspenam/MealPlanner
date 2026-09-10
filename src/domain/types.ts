@@ -49,6 +49,7 @@ export interface Recipe {
   servings: number;
   ingredients: Ingredient[];
   tags: string[];
+  instructions?: string[];
   source: "builtin" | "custom";
   builtinId?: string;
   archived?: boolean;

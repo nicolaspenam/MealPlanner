@@ -13,6 +13,7 @@ import {
 } from "../domain/planner";
 import { resolveRecipes, validateRecipe } from "../domain/recipes";
 import { remainingPortions as leftoverCount } from "../domain/shoppingList";
+import { fillRemainingWeek as planRemainingWeek } from "../domain/randomFill";
 import type {
   AppData,
   CookBatch,
@@ -142,6 +143,19 @@ export class PlannerStore {
     });
   }
 
+  fillRemainingWeek(dates: string[]): number {
+    const planned = planRemainingWeek(this.data, dates, this.recipes());
+    if (planned.mealEntries.length === 0) {
+      return 0;
+    }
+    this.commit({
+      ...this.data,
+      cookBatches: [...this.data.cookBatches, ...planned.cookBatches],
+      mealEntries: [...this.data.mealEntries, ...planned.mealEntries],
+    });
+    return planned.mealEntries.length;
+  }
+
   planLeftover(input: {
     date: string;
     slotId: string;
@@ -257,6 +271,7 @@ export function newCustomRecipe(): Recipe {
       },
     ],
     tags: [],
+    instructions: [],
     source: "custom",
     updatedAt: new Date().toISOString(),
   };
@@ -269,6 +284,7 @@ export function forkBuiltin(recipe: Recipe): Recipe {
     builtinId: recipe.builtinId ?? recipe.id,
     ingredients: recipe.ingredients.map((ingredient) => ({ ...ingredient })),
     tags: [...recipe.tags],
+    instructions: [...(recipe.instructions ?? [])],
     updatedAt: new Date().toISOString(),
   };
 }

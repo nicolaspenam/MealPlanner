@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { TREAT_TAG } from "../data/recipeDraft";
 import { AISLES, INGREDIENT_UNITS, type Ingredient, type Recipe } from "../domain/types";
 import { createId } from "../domain/ids";
 import { forkBuiltin, newCustomRecipe } from "../storage/store";
@@ -72,6 +73,18 @@ export function RecipeEditPage({ mode }: { mode: "new" | "edit" }) {
           />
         </label>
         <label>
+          <span>Instructions (one step per line)</span>
+          <textarea
+            rows={8}
+            value={(recipe.instructions ?? []).join("\n")}
+            onChange={(event) =>
+              update({
+                instructions: event.target.value.split("\n"),
+              })
+            }
+          />
+        </label>
+        <label>
           <span>Portions this recipe creates</span>
           <input
             type="number"
@@ -93,6 +106,19 @@ export function RecipeEditPage({ mode }: { mode: "new" | "edit" }) {
               })
             }
           />
+        </label>
+        <label className="checkbox-row">
+          <input
+            type="checkbox"
+            checked={recipe.tags.includes(TREAT_TAG)}
+            onChange={(event) => {
+              const withoutTreat = recipe.tags.filter((tag) => tag !== TREAT_TAG);
+              update({
+                tags: event.target.checked ? [...withoutTreat, TREAT_TAG] : withoutTreat,
+              });
+            }}
+          />
+          <span>Mark as a yummy treat (not an everyday healthy option)</span>
         </label>
         <div className="stack-sm">
           <div className="field-label">Ingredients</div>
@@ -187,7 +213,13 @@ export function RecipeEditPage({ mode }: { mode: "new" | "edit" }) {
           <button
             className="btn primary"
             onClick={() => {
-              const next = { ...recipe, updatedAt: new Date().toISOString() };
+              const next = {
+                ...recipe,
+                instructions: (recipe.instructions ?? [])
+                  .map((step) => step.trim())
+                  .filter(Boolean),
+                updatedAt: new Date().toISOString(),
+              };
               const errors = store.upsertRecipe(next);
               if (errors.length > 0) {
                 setError(errors[0] ?? "Could not save");

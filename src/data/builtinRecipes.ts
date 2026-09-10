@@ -1,42 +1,7 @@
-import type { Aisle, IngredientUnit, Recipe } from "../domain/types";
-
-interface IngredientDraft {
-  name: string;
-  quantity: number;
-  unit: IngredientUnit;
-  aisle: Aisle;
-}
-
-interface RecipeDraft {
-  id: string;
-  name: string;
-  description: string;
-  servings: number;
-  tags: string[];
-  ingredients: IngredientDraft[];
-}
-
-const STAMP = "2026-01-01T00:00:00.000Z";
-
-function recipe(draft: RecipeDraft): Recipe {
-  return {
-    id: draft.id,
-    builtinId: draft.id,
-    name: draft.name,
-    description: draft.description,
-    servings: draft.servings,
-    tags: draft.tags,
-    source: "builtin",
-    ingredients: draft.ingredients.map((item, index) => ({
-      id: `${draft.id}-ing-${index + 1}`,
-      name: item.name,
-      quantity: item.quantity,
-      unit: item.unit,
-      aisle: item.aisle,
-    })),
-    updatedAt: STAMP,
-  };
-}
+import type { Recipe } from "../domain/types";
+import { BUILTIN_INSTRUCTIONS } from "./builtinInstructions";
+import { EXTRA_RECIPE_DRAFTS } from "./extraRecipes";
+import { recipeFromDraft, type RecipeDraft } from "./recipeDraft";
 
 const DRAFTS: RecipeDraft[] = [
   {
@@ -618,12 +583,18 @@ const DRAFTS: RecipeDraft[] = [
   },
 ];
 
-export const BUILTIN_RECIPES: Recipe[] = DRAFTS.map(recipe);
+const ALL_DRAFTS: RecipeDraft[] = [...DRAFTS, ...EXTRA_RECIPE_DRAFTS].map((draft) => ({
+  ...draft,
+  instructions: draft.instructions ?? BUILTIN_INSTRUCTIONS[draft.id] ?? [],
+}));
+
+export const BUILTIN_RECIPES: Recipe[] = ALL_DRAFTS.map(recipeFromDraft);
 
 export function getBuiltinRecipes(): Recipe[] {
   return BUILTIN_RECIPES.map((item) => ({
     ...item,
     ingredients: item.ingredients.map((ingredient) => ({ ...ingredient })),
     tags: [...item.tags],
+    instructions: [...(item.instructions ?? [])],
   }));
 }

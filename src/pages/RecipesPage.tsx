@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useMemo, useState } from "react";
+import { formatRecipeTag } from "../data/recipeDraft";
 import { useResolvedRecipes } from "../state/storeContext";
 
 export function RecipesPage() {
@@ -48,10 +49,10 @@ export function RecipesPage() {
         {tags.map((item) => (
           <button
             key={item}
-            className={`chip ${tag === item ? "active" : ""}`}
+            className={`chip ${tag === item ? "active" : ""} ${item === "treat" ? "treat" : ""}`}
             onClick={() => setTag(item)}
           >
-            {item}
+            {item === "all" ? "all" : formatRecipeTag(item)}
           </button>
         ))}
       </div>
@@ -63,8 +64,8 @@ export function RecipesPage() {
             <p className="muted">{recipe.description}</p>
             <div className="tags">
               {recipe.tags.map((item) => (
-                <span className="tag" key={item}>
-                  {item}
+                <span className={`tag ${item === "treat" ? "treat" : ""}`} key={item}>
+                  {formatRecipeTag(item)}
                 </span>
               ))}
             </div>

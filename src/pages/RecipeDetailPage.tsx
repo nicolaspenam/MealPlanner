@@ -1,4 +1,5 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { formatRecipeTag, isTreatRecipe } from "../data/recipeDraft";
 import { formatAmount } from "../domain/scaling";
 import { usePlannerStore, useResolvedRecipes } from "../state/storeContext";
 
@@ -24,10 +25,15 @@ export function RecipeDetailPage() {
       <h1>{recipe.name}</h1>
       <p className="muted">{recipe.description}</p>
       <p>Makes {recipe.servings} portions</p>
+      {isTreatRecipe(recipe) ? (
+        <p className="treat-banner">
+          Yummy treat — a more indulgent option, not one of the everyday healthy meals.
+        </p>
+      ) : null}
       <div className="tags" style={{ margin: "0.8rem 0 1rem" }}>
         {recipe.tags.map((tag) => (
-          <span className="tag" key={tag}>
-            {tag}
+          <span className={`tag ${tag === "treat" ? "treat" : ""}`} key={tag}>
+            {formatRecipeTag(tag)}
           </span>
         ))}
       </div>
@@ -41,6 +47,20 @@ export function RecipeDetailPage() {
           ))}
         </ul>
       </div>
+      {(recipe.instructions ?? []).length > 0 ? (
+        <div className="panel" style={{ marginTop: "1rem" }}>
+          <h2>Instructions</h2>
+          <ol className="instructions">
+            {(recipe.instructions ?? []).map((step, index) => (
+              <li key={`${recipe.id}-step-${index}`}>{step}</li>
+            ))}
+          </ol>
+        </div>
+      ) : (
+        <p className="muted" style={{ marginTop: "1rem" }}>
+          No instructions yet. Edit the recipe to add steps that work for you.
+        </p>
+      )}
       <div className="actions">
         <Link className="btn primary" to={`/recipes/${recipe.id}/edit`}>
           Edit
