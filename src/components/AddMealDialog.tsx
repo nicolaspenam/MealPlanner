@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { TREAT_LABEL, isTreatRecipe } from "../data/recipeDraft";
 import type { LeftoverBatch } from "../domain/planner";
 import type { Recipe } from "../domain/types";
 
@@ -97,7 +98,10 @@ export function AddMealDialog({
                   onClick={() => chooseRecipe(recipe)}
                 >
                   <strong>{recipe.name}</strong>
-                  <div className="muted">Makes {recipe.servings} portions</div>
+                  <div className="muted">
+                    Makes {recipe.servings} portions
+                    {isTreatRecipe(recipe) ? ` · ${TREAT_LABEL}` : ""}
+                  </div>
                 </button>
               ))}
             </div>

@@ -31,7 +31,7 @@ export function WeekView({
           <section key={date} className={`day-card ${date === today ? "today" : ""}`}>
             <div className="day-header">
               <h2>{formatDayHeading(date)}</h2>
-              <button className="btn ghost" onClick={() => onAddSlot(date)}>
+              <button className="btn ghost compact" onClick={() => onAddSlot(date)}>
                 Add slot
               </button>
             </div>
@@ -42,7 +42,7 @@ export function WeekView({
                   <div className="slot-head">
                     <strong>{slot.name}</strong>
                     {slots.length > 1 ? (
-                      <button className="btn ghost" onClick={() => onRemoveSlot(date, slot.id)}>
+                      <button className="btn ghost compact" onClick={() => onRemoveSlot(date, slot.id)}>
                         Remove
                       </button>
                     ) : null}
@@ -66,7 +66,7 @@ export function WeekView({
                                 : `${entry.portions} portion${entry.portions === 1 ? "" : "s"}`}
                             </div>
                           </div>
-                          <button className="btn ghost" onClick={() => onRemoveMeal(entry.id)}>
+                          <button className="btn ghost compact" onClick={() => onRemoveMeal(entry.id)}>
                             Remove
                           </button>
                         </div>

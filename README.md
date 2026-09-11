@@ -8,15 +8,17 @@ An installable PWA for planning the week’s meals and turning them into a groce
 
 - Weekly planner (Monday by default) for the current week or any later week
 - Default slots: breakfast, lunch, dinner, plus extra slots such as snacks
-- Built-in healthy recipes (omnivore and vegetarian) with ingredients, units, and portion counts
+- Built-in healthy recipes (omnivore and vegetarian) plus clearly labelled yummy treats
+- Step-by-step instructions on every built-in recipe, which you can edit if you prefer a different method
 - Create and edit recipes, including overlays on the built-in catalog
+- Surprise remaining meals: fill empty slots in the week you are looking at with random healthy recipes (not treats), scaled to one portion so nothing is left over, and update the shopping list
 - Cook extra portions and assign leftovers to later days or weeks
 - Eating-out meals (no shopping impact; macros can be self-reported later)
 - Shopping list for a week, scaled by how many portions you cook
 - Leftovers from a previous week do not appear on this week’s list
 - Local storage plus backup export/import
 
-Cooking instructions and per-portion macros are deferred on purpose.
+Per-portion macros are still deferred.
 
 ## Shopping-list rule
 
