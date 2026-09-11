@@ -3,6 +3,7 @@ import { addDays, formatWeekRange, startOfWeek, todayISO, weekDates } from "../d
 import { emptySlotsForWeek } from "../domain/randomFill";
 import { useAppData, usePlannerStore, useResolvedRecipes } from "../state/storeContext";
 import { WeekView } from "../components/WeekView";
+import { WeekCalendarView } from "../components/WeekCalendarView";
 import { AddMealDialog } from "../components/AddMealDialog";
 
 export function WeekPage() {
@@ -54,7 +55,7 @@ export function WeekPage() {
   }
 
   return (
-    <div className="page">
+    <div className={`page ${data.settings.weekView === "calendar" ? "page-calendar" : ""}`}>
       <div className="topbar">
         <div>
           <p className="eyebrow">Weekly plan</p>
@@ -84,6 +85,22 @@ export function WeekPage() {
           </button>
         </div>
       </div>
+      <div className="view-toggle" role="group" aria-label="Week layout">
+        <button
+          type="button"
+          className={`chip ${data.settings.weekView !== "calendar" ? "active" : ""}`}
+          onClick={() => store.updateSettings({ weekView: "list" })}
+        >
+          List
+        </button>
+        <button
+          type="button"
+          className={`chip ${data.settings.weekView === "calendar" ? "active" : ""}`}
+          onClick={() => store.updateSettings({ weekView: "calendar" })}
+        >
+          Calendar
+        </button>
+      </div>
       <div className="surprise-row" ref={helpRef}>
         <button
           className="btn primary"
@@ -111,16 +128,33 @@ export function WeekPage() {
         ) : null}
       </div>
       {fillMessage ? <p className="status-note">{fillMessage}</p> : null}
-      <WeekView
-        dates={dates}
-        today={today}
-        data={data}
-        recipes={recipes}
-        onAdd={(date, slotId) => setTarget({ date, slotId })}
-        onRemoveMeal={(id) => store.removeMeal(id)}
-        onAddSlot={(date) => store.addDaySlot(date, "Snack")}
-        onRemoveSlot={(date, slotId) => store.removeDaySlot(date, slotId)}
-      />
+      {data.settings.weekView === "calendar" ? (
+        <WeekCalendarView
+          dates={dates}
+          today={today}
+          data={data}
+          recipes={recipes}
+          onAdd={(date, slotId) => setTarget({ date, slotId })}
+          onRemoveMeal={(id) => store.removeMeal(id)}
+          onAddSlot={(date) => store.addDaySlot(date, "Snack")}
+          onRemoveSlot={(date, slotId) => store.removeDaySlot(date, slotId)}
+          onEnsureAndAdd={(date, slotName) => {
+            const slotId = store.ensureDaySlot(date, slotName);
+            setTarget({ date, slotId });
+          }}
+        />
+      ) : (
+        <WeekView
+          dates={dates}
+          today={today}
+          data={data}
+          recipes={recipes}
+          onAdd={(date, slotId) => setTarget({ date, slotId })}
+          onRemoveMeal={(id) => store.removeMeal(id)}
+          onAddSlot={(date) => store.addDaySlot(date, "Snack")}
+          onRemoveSlot={(date, slotId) => store.removeDaySlot(date, slotId)}
+        />
+      )}
       {target ? (
         <AddMealDialog
           date={target.date}
