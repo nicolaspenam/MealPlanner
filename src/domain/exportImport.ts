@@ -50,6 +50,9 @@ export function parseImport(raw: string): AppData {
   if (imported.settings.weekStartsOn !== 0 && imported.settings.weekStartsOn !== 1) {
     imported.settings.weekStartsOn = 1;
   }
+  if (imported.settings.weekView !== "calendar") {
+    imported.settings.weekView = "list";
+  }
   return imported;
 }
 

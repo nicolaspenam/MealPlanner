@@ -6,7 +6,7 @@ An installable PWA for planning the week’s meals and turning them into a groce
 
 ## What it does now
 
-- Weekly planner (Monday by default) for the current week or any later week
+- Weekly planner (Monday by default) for the current week or any later week, in a list of day cards or a compact calendar grid
 - Default slots: breakfast, lunch, dinner, plus extra slots such as snacks
 - Built-in healthy recipes (omnivore and vegetarian) plus clearly labelled yummy treats
 - Step-by-step instructions on every built-in recipe, which you can edit if you prefer a different method

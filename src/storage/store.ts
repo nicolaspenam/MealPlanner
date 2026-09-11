@@ -9,6 +9,7 @@ import {
   leftoverBatches as findLeftoverBatches,
   removeSlotFromDay,
   setDaySlots,
+  slotOnDateByName,
   slotsForDate,
 } from "../domain/planner";
 import { resolveRecipes, validateRecipe } from "../domain/recipes";
@@ -210,6 +211,19 @@ export class PlannerStore {
       ...this.data,
       daySlotOverrides: setDaySlots(this.data.daySlotOverrides, date, nextSlots),
     });
+  }
+
+  ensureDaySlot(date: string, name: string): string {
+    const existing = slotOnDateByName(this.data, date, name);
+    if (existing) {
+      return existing.id;
+    }
+    this.addDaySlot(date, name);
+    const created = slotOnDateByName(this.data, date, name);
+    if (!created) {
+      throw new Error("Could not add that meal slot");
+    }
+    return created.id;
   }
 
   removeDaySlot(date: string, slotId: string): void {

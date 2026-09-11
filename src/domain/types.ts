@@ -89,6 +89,7 @@ export interface MealEntry {
 export interface Settings {
   weekStartsOn: 0 | 1;
   defaultSlots: MealSlotTemplate[];
+  weekView: "list" | "calendar";
 }
 
 export interface ShoppingCheck {
@@ -123,6 +124,7 @@ export function defaultSettings(): Settings {
   return {
     weekStartsOn: 1,
     defaultSlots: DEFAULT_SLOTS.map((slot) => ({ ...slot })),
+    weekView: "list",
   };
 }
 

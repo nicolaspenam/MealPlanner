@@ -75,6 +75,10 @@ export function formatWeekRange(weekStart: string): string {
   return `${startLabel} – ${endLabel}`;
 }
 
-export function weekdayLabel(iso: string): string {
-  return parseISODate(iso).toLocaleDateString(undefined, { weekday: "long" });
+export function weekdayShort(iso: string): string {
+  return parseISODate(iso).toLocaleDateString(undefined, { weekday: "short" });
+}
+
+export function monthDay(iso: string): string {
+  return parseISODate(iso).toLocaleDateString(undefined, { day: "numeric" });
 }

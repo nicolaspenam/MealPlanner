@@ -19,6 +19,7 @@ describe("export and import", () => {
     const restored = parseImport(JSON.stringify(payload));
     expect(restored.mealEntries).toEqual(data.mealEntries);
     expect(restored.settings.weekStartsOn).toBe(0);
+    expect(restored.settings.weekView).toBe("list");
   });
 
   it("accepts a raw AppData object without the export wrapper", () => {

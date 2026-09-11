@@ -26,6 +26,42 @@ export function entriesForSlot(
   );
 }
 
+export function slotNameKey(name: string): string {
+  return name.trim().toLowerCase();
+}
+
+export function slotRowsForWeek(data: AppData, dates: string[]): MealSlotTemplate[] {
+  const byKey = new Map<string, MealSlotTemplate>();
+  for (const date of dates) {
+    for (const slot of slotsForDate(data, date)) {
+      const key = slotNameKey(slot.name);
+      const existing = byKey.get(key);
+      if (!existing || slot.order < existing.order) {
+        byKey.set(key, { id: key, name: slot.name, order: slot.order });
+      }
+    }
+  }
+  return [...byKey.values()].sort(
+    (a, b) => a.order - b.order || a.name.localeCompare(b.name),
+  );
+}
+
+export function slotOnDateByName(
+  data: AppData,
+  date: string,
+  name: string,
+): MealSlotTemplate | undefined {
+  const key = slotNameKey(name);
+  return slotsForDate(data, date).find((slot) => slotNameKey(slot.name) === key);
+}
+
+export function mealTitle(entry: MealEntry, recipes: Recipe[]): string {
+  if (entry.kind === "eating_out") {
+    return entry.eatingOutName || "Eating out";
+  }
+  return recipes.find((recipe) => recipe.id === entry.recipeId)?.name ?? "Recipe";
+}
+
 export type LeftoverBatch = {
   batch: CookBatch;
   recipe: Recipe;

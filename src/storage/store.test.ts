@@ -127,4 +127,12 @@ describe("PlannerStore", () => {
         .every((entry) => entry.portions === 1),
     ).toBe(true);
   });
+
+  it("reuses a named slot when filling a calendar cell", () => {
+    const planner = store();
+    expect(planner.ensureDaySlot("2026-09-07", "Breakfast")).toBe("breakfast");
+    const snackId = planner.ensureDaySlot("2026-09-07", "Snack");
+    expect(planner.slotsFor("2026-09-07").map((slot) => slot.name)).toContain("Snack");
+    expect(planner.ensureDaySlot("2026-09-07", "Snack")).toBe(snackId);
+  });
 });

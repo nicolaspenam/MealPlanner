@@ -627,6 +627,191 @@ textarea,
   flex: 1;
 }
 
+.view-toggle {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.4rem;
+  margin: -0.35rem 0 0.9rem;
+}
+
+.view-toggle .chip {
+  text-align: center;
+}
+
+.week-calendar-scroll {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  margin-inline: -0.5rem;
+  padding-bottom: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.week-calendar {
+  width: 100%;
+  min-width: 42rem;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.week-calendar th,
+.week-calendar td {
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+  padding: 0.3rem;
+}
+
+.week-calendar tr > :last-child {
+  border-right: 0;
+}
+
+.week-calendar tbody tr:last-child th,
+.week-calendar tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.week-calendar thead th {
+  background: #fbf6ee;
+  font-weight: 650;
+  text-align: center;
+  padding: 0.4rem 0.25rem 0.45rem;
+}
+
+.week-calendar .cal-corner,
+.week-calendar tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  width: 4.4rem;
+  min-width: 4.4rem;
+  background: #f7f0e6;
+  text-align: left;
+  font-size: 0.72rem;
+  font-weight: 650;
+  color: var(--muted);
+  padding: 0.45rem 0.4rem;
+}
+
+.week-calendar thead .cal-corner {
+  z-index: 3;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.cal-day-head {
+  display: grid;
+  justify-items: center;
+  gap: 0.05rem;
+  position: relative;
+}
+
+.cal-weekday {
+  font-size: 0.72rem;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.cal-date {
+  font-family: var(--display);
+  font-size: 1.05rem;
+}
+
+.cal-add-slot {
+  width: 1.6rem;
+  height: 1.6rem;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  border-radius: 8px;
+  padding: 0;
+  min-height: 0;
+}
+
+.cal-add-slot:hover,
+.cal-empty:hover,
+.cal-add-more:hover {
+  background: #e7efe8;
+  color: var(--green-dark);
+}
+
+.week-calendar td.cal-today,
+.week-calendar thead th.cal-today {
+  background: #eef5ef;
+}
+
+.week-calendar tbody th {
+  vertical-align: middle;
+}
+
+.week-calendar td {
+  min-width: 5.4rem;
+  height: 4.6rem;
+  background: var(--surface);
+}
+
+.cal-events {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.cal-event {
+  display: grid;
+  gap: 0.1rem;
+  text-align: left;
+  border: 0;
+  border-radius: 8px;
+  padding: 0.35rem 0.4rem;
+  min-height: 2.6rem;
+  background: #e7efe8;
+  color: var(--green-dark);
+  width: 100%;
+}
+
+.cal-event.out {
+  background: #f8e4d8;
+  color: #8a3a12;
+}
+
+.cal-event-title {
+  font-size: 0.75rem;
+  font-weight: 650;
+  line-height: 1.2;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.cal-event-meta {
+  font-size: 0.68rem;
+  opacity: 0.8;
+}
+
+.cal-empty,
+.cal-add-more {
+  width: 100%;
+  min-height: 3.8rem;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  border-radius: 8px;
+  font-size: 1.1rem;
+}
+
+.cal-add-more {
+  min-height: 1.8rem;
+  font-size: 0.95rem;
+}
+
+.meal-peek h2 {
+  margin-bottom: 0.35rem;
+}
+
 @media (min-width: 720px) {
   h1 {
     font-size: 2rem;
@@ -684,6 +869,23 @@ textarea,
   .ingredient-row {
     grid-template-columns: 1.4fr 0.7fr 0.8fr 1fr auto;
     grid-template-areas: "name qty unit aisle remove";
+  }
+
+  .view-toggle {
+    display: flex;
+    max-width: 18rem;
+  }
+
+  .page-calendar {
+    width: min(1120px, calc(100% - 1.5rem));
+  }
+
+  .week-calendar {
+    min-width: 0;
+  }
+
+  .week-calendar-scroll {
+    margin-inline: 0;
   }
 }
 
